@@ -4,6 +4,8 @@ from tkinter import *
 import os
 from tkinter import messagebox, filedialog
 from threading import Thread
+
+import AppOpener
 from requests import get
 
 try:
@@ -263,10 +265,11 @@ def dev():
 
 
 def geturlx(*args):
-    global var
-    if var.get() == 1:
+    global combobox
+    print(combobox.get())
+    if combobox.get() == "YT Video":
         geturl()
-    elif var.get() == 2:
+    elif combobox.get() == "YT PlayList":
         getplaylisturl()
     else:
         ErrorNotify('Select type of download')
@@ -285,9 +288,7 @@ def popup(e):
 def exiT(*args):
     top.destroy()
     try:
-        os.system(f'TASKKILL /F /IM "Ultimate Downloader".exe')
-        os.system(f"TASKKILL /F /IM Python.exe")
-        os.system(f"cls")
+        AppOpener.close("Ultimate Downloader")
     except:
         pass
 
@@ -313,7 +314,7 @@ check_theme_mode()
 customtkinter.set_appearance_mode(theme_mode)
 
 def gui():
-    global var, top, l4, e1, l5, l9, l8, my_menu, b2, b3, b4, switch_var
+    global combobox, top, l4, e1, l5, l9, l8, my_menu, b2, b3, b4, switch_var
     top = customtkinter.CTk()
     top.title('Ultimate Downloader v3.0')
     top.geometry('506x560')
@@ -349,7 +350,7 @@ def gui():
     logo = customtkinter.CTkLabel(top, image=dwImage, text="")
     logo.place(x=380, y=20)
 
-    var = IntVar()
+    # var = IntVar()
     # rb1 = customtkinter.CTkRadioButton(top, text='Video', variable=var, value=1, font=('Calbiri', 14, 'bold'), width=30)
     # rb1.place(x=160, y=105)
     # var.set(1)
