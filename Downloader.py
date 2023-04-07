@@ -1,3 +1,4 @@
+import threading
 import webbrowser
 from tkinter import *
 import os
@@ -68,14 +69,21 @@ class UltimateDownloader():
         total_size = stream.filesize
         bytes_downloaded = total_size - bytes_remaining
         percentage_of_complete = bytes_downloaded / total_size * 100
-        per = str(int(percentage_of_complete))
-        self.bbpercentage.configure(text=per + '%')
-        self.bbpercentage.update()
         self.broggress_bar.set(float(percentage_of_complete) / 100)
         self.top.update_idletasks()
 
+    def processingAnimation(self, mode):
+        if mode == "loading":
+            self.broggress_bar.configure(mode="indeterminate")
+            self.broggress_bar.start()
+        else:
+            self.broggress_bar.configure(mode="determinate")
+            self.broggress_bar.stop()
+            self.broggress_bar.set(0.0)
+
     def geturl(self, *args):
         try:
+            self.processingAnimation("loading")
             self.download_status.configure(text="Status: processing...")
             link = self.url_entry.get()
             ytv = YouTube(link, on_complete_callback=self.on_complete, on_progress_callback=self.on_progress)
@@ -96,6 +104,7 @@ class UltimateDownloader():
             self.video_height_quality_download.configure(text=f'HQ', fg_color='red', command=lambda: self.downloadHight(ytv))
             self.video_medium_quality_download.configure(text=f'RQ', fg_color='brown', command=lambda: self.downloadLowest(ytv))
             self.video_low_quality_download.configure(text=f'MP3', fg_color='blue', command=lambda: self.downloadAudio(ytv))
+            self.processingAnimation("stop")
 
         except:
             self.ErrorNotify("Invalid YouTube url!")
@@ -107,6 +116,7 @@ class UltimateDownloader():
         rq = 0
         ao = 0
         du = 0
+        self.processingAnimation("loading")
         try:
             link = self.url_entry.get()
             yt_playlist = Playlist(link)
@@ -133,6 +143,7 @@ class UltimateDownloader():
             self.playlist_height_quality_download.configure(text=f'HQ', fg_color="red", command=lambda: self.downloadPlaylistHight(link))
             self.playlist_medium_quality_download.configure(text=f'RQ', fg_color="brown", command=lambda: self.downloadPlaylistLowest(link))
             self.playlist_low_quality_download.configure(text=f'MP3', fg_color="blue", command=lambda: self.downloadPlaylistAudio(link))
+            self.processingAnimation("stop")
 
         except:
             self.ErrorNotify("Invalid Playlist url!")
@@ -409,11 +420,8 @@ class UltimateDownloader():
         # self.pause_button.grid(row=10, column=0, padx=10, pady=(10), sticky="e")
 
         self.broggress_bar = customtkinter.CTkProgressBar(self.top, width=450, height=20)
-        self.broggress_bar.grid(row=10, column=0, columnspan=4, pady=10, padx=10, sticky="w")
-        self.broggress_bar.set(0.0)
-
-        self.bbpercentage = customtkinter.CTkLabel(self.top, text='0%', font=('Calbiri', 18, 'bold'))
-        self.bbpercentage.grid(row=10, column=3, padx=10, pady=10, sticky="nsew")
+        self.broggress_bar.grid(row=10, column=0, columnspan=4, pady=10, padx=10, sticky="nsew")
+        self.processingAnimation("stop")
 
         self.download_status = customtkinter.CTkLabel(self.top, text=f'Status: ', font=('Calbiri', 16, 'bold'))
         self.download_status.grid(row=11, column=0, columnspan=4, padx=10, sticky="w")
