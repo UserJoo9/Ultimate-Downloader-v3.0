@@ -1,4 +1,3 @@
-import threading
 import webbrowser
 from tkinter import *
 import os
@@ -152,7 +151,7 @@ class UltimateDownloader():
     def downloadHight(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
                 self.InfoNotify("File is already exists!")
@@ -168,7 +167,7 @@ class UltimateDownloader():
     def downloadLowest(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
                 self.InfoNotify("File is already exists!")
@@ -184,7 +183,7 @@ class UltimateDownloader():
     def downloadAudio(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
                 self.InfoNotify("File is already exists!")
@@ -206,7 +205,7 @@ class UltimateDownloader():
         yt_playlist = Playlist(link)
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             else:
                 self.InfoNotify("Download started")
@@ -223,7 +222,7 @@ class UltimateDownloader():
         yt_playlist = Playlist(link)
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             else:
                 self.InfoNotify("Download started")
@@ -240,7 +239,7 @@ class UltimateDownloader():
         yt_playlist = Playlist(link)
         try:
             self.folder = filedialog.askdirectory()
-            if self.folder == ' ':
+            if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
             else:
                 self.InfoNotify("Download started")
