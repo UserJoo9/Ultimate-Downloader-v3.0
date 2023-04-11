@@ -26,13 +26,13 @@ class UltimateDownloader():
             txt = float(get("https://pastebin.com/raw/FR7sD2hT").text)
             if txt > self.currentVersion:
                 self.notification("New Update Available!",
-                             "There Was New Update Available For Our App, New Features Waiting For You..!", "Download Now!",
-                             f"{self.devsite}")
+                                  "There Was New Update Available For Our App, New Features Waiting For You..!",
+                                  "Download Now!",
+                                  f"{self.devsite}")
             else:
                 pass
         except:
             pass
-
 
     def notification(self, title, msg, buttonLabel, function):
         toaster = Notification(
@@ -46,21 +46,18 @@ class UltimateDownloader():
         toaster.add_actions(label=buttonLabel, launch=function)
         toaster.show()
 
-
     def WarningNotify(self, s):
         messagebox.showwarning("Warning!", s)
-
 
     def ErrorNotify(self, s):
         messagebox.showerror("Error!", s)
 
-
     def InfoNotify(self, s):
         messagebox.showinfo("Notify!", s)
 
-
     def on_complete(self, *args):
-        self.notification('Download completed!', 'Download process is completed you can check now!', "Open Folder!", self.folder)
+        self.notification('Download completed!', 'Download process is completed you can check now!', "Open Folder!",
+                          self.folder)
         self.download_path.configure(text=f"Downloaded in: {self.folder}")
 
     def on_progress(self, stream, chunk, bytes_remaining):
@@ -96,18 +93,21 @@ class UltimateDownloader():
             self.download_status.configure(text="Status: ready!")
             self.title_label.configure(text=f"Title: {ytv.title}")
             self.duration_label.configure(text=f"Duration: {round(ytv.length / 60, 2)} minutes")
-            self.file_size_label.configure(text=f"File size: HQ-{height_quality}, RQ-{rare_quality}, MP3-{audio_only} >> Mb")
+            self.file_size_label.configure(
+                text=f"File size: HQ-{height_quality}, RQ-{rare_quality}, MP3-{audio_only} >> Mb")
             self.playlist_height_quality_download.configure(text=f'HQ', fg_color="#1f6aa5", command=None)
             self.playlist_medium_quality_download.configure(text=f'RQ', fg_color="#1f6aa5", command=None)
             self.playlist_low_quality_download.configure(text=f'MP3', fg_color="#1f6aa5", command=None)
-            self.video_height_quality_download.configure(text=f'HQ', fg_color='red', command=lambda: self.downloadHight(ytv))
-            self.video_medium_quality_download.configure(text=f'RQ', fg_color='brown', command=lambda: self.downloadLowest(ytv))
-            self.video_low_quality_download.configure(text=f'MP3', fg_color='blue', command=lambda: self.downloadAudio(ytv))
+            self.video_height_quality_download.configure(text=f'HQ', fg_color='red',
+                                                         command=lambda: self.downloadHight(ytv))
+            self.video_medium_quality_download.configure(text=f'RQ', fg_color='brown',
+                                                         command=lambda: self.downloadLowest(ytv))
+            self.video_low_quality_download.configure(text=f'MP3', fg_color='blue',
+                                                      command=lambda: self.downloadAudio(ytv))
             self.processingAnimation("stop")
 
         except:
             self.ErrorNotify("Invalid YouTube url!")
-
 
     def getplaylisturl(self, *args):
         self.download_status.configure(text="Status: processing...")
@@ -139,21 +139,24 @@ class UltimateDownloader():
             self.video_height_quality_download.configure(text=f'HQ', fg_color="#1f6aa5", command=None)
             self.video_medium_quality_download.configure(text=f'RQ', fg_color="#1f6aa5", command=None)
             self.video_low_quality_download.configure(text=f'MP3', fg_color="#1f6aa5", command=None)
-            self.playlist_height_quality_download.configure(text=f'HQ', fg_color="red", command=lambda: self.downloadPlaylistHight(link))
-            self.playlist_medium_quality_download.configure(text=f'RQ', fg_color="brown", command=lambda: self.downloadPlaylistLowest(link))
-            self.playlist_low_quality_download.configure(text=f'MP3', fg_color="blue", command=lambda: self.downloadPlaylistAudio(link))
+            self.playlist_height_quality_download.configure(text=f'HQ', fg_color="red",
+                                                            command=lambda: self.downloadPlaylistHight(link))
+            self.playlist_medium_quality_download.configure(text=f'RQ', fg_color="brown",
+                                                            command=lambda: self.downloadPlaylistLowest(link))
+            self.playlist_low_quality_download.configure(text=f'MP3', fg_color="blue",
+                                                         command=lambda: self.downloadPlaylistAudio(link))
             self.processingAnimation("stop")
 
         except:
             self.ErrorNotify("Invalid Playlist url!")
-
 
     def downloadHight(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
             if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
-            elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
+            elif os.path.exists(self.folder + "/" + video_object.title + ".mp4") or os.path.exists(
+                    self.folder + "/" + video_object.title + ".mp3"):
                 self.InfoNotify("File is already exists!")
             else:
                 self.InfoNotify("Download started")
@@ -163,13 +166,13 @@ class UltimateDownloader():
         except:
             self.ErrorNotify("Download failed!")
 
-
     def downloadLowest(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
             if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
-            elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
+            elif os.path.exists(self.folder + "/" + video_object.title + ".mp4") or os.path.exists(
+                    self.folder + "/" + video_object.title + ".mp3"):
                 self.InfoNotify("File is already exists!")
             else:
                 self.InfoNotify("Download started")
@@ -179,13 +182,13 @@ class UltimateDownloader():
         except:
             self.ErrorNotify("Download failed!")
 
-
     def downloadAudio(self, video_object):
         try:
             self.folder = filedialog.askdirectory()
             if self.folder == '' or self.folder == ' ':
                 self.download_status.configure(text="Status: ")
-            elif os.path.exists(self.folder+"/"+video_object.title+".mp4") or os.path.exists(self.folder+"/"+video_object.title+".mp3"):
+            elif os.path.exists(self.folder + "/" + video_object.title + ".mp4") or os.path.exists(
+                    self.folder + "/" + video_object.title + ".mp3"):
                 self.InfoNotify("File is already exists!")
             else:
                 self.InfoNotify("Download started")
@@ -199,7 +202,6 @@ class UltimateDownloader():
                 self.download_status.configure(text="Status: Downloaded successfully!")
         except:
             self.ErrorNotify("Download failed!")
-
 
     def downloadPlaylistHight(self, link):
         yt_playlist = Playlist(link)
@@ -217,7 +219,6 @@ class UltimateDownloader():
         except:
             self.ErrorNotify("Download failed!")
 
-
     def downloadPlaylistLowest(self, link):
         yt_playlist = Playlist(link)
         try:
@@ -233,7 +234,6 @@ class UltimateDownloader():
                 self.download_status.configure(text="Status: Downloaded successfully!")
         except:
             self.ErrorNotify("Download failed!")
-
 
     def downloadPlaylistAudio(self, link):
         yt_playlist = Playlist(link)
@@ -255,13 +255,11 @@ class UltimateDownloader():
         except:
             self.ErrorNotify("Download failed!")
 
-
     def browse(self, *args):
         try:
             os.startfile(self.folder)
         except:
             self.ErrorNotify("No directory selected")
-
 
     def stopdownload(*args):
         stop = False
@@ -271,7 +269,6 @@ class UltimateDownloader():
             webbrowser.open(f'{self.devsite}')
         except:
             self.ErrorNotify("Redirecting failed!")
-
 
     def geturlx(self, *args):
         print(self.choices.get())
@@ -286,16 +283,13 @@ class UltimateDownloader():
         else:
             self.ErrorNotify('Select type of download')
 
-
     def paste(self):
         spam = pyperclip.paste()
         self.url_entry.delete('0', 'end')
         self.url_entry.insert('end', spam)
 
-
     def popup(self, e):
         self.my_menu.tk_popup(e.x_root, e.y_root)
-
 
     def stop(self, *args):
         try:
@@ -303,7 +297,6 @@ class UltimateDownloader():
             AppOpener.close("Ultimate Downloader")
         except:
             pass
-
 
     def check_theme_mode(self):
         try:
@@ -318,7 +311,6 @@ class UltimateDownloader():
             with open("Dtheme.apr", "w") as f:
                 f.write("dark")
             f.close()
-
 
     def appearanceMode(self):
         if self.dark_mode_switch.get() == "on":
@@ -339,16 +331,19 @@ class UltimateDownloader():
         self.top.iconbitmap("images\\favicon.ico")
 
         self.dwImage = customtkinter.CTkImage(light_image=Image.open("images/UltimateDownloader Banner.png"),
-                                            dark_image=Image.open("images/UltimateDownloader Banner.png"),
-                                         size=(580, 130))
+                                              dark_image=Image.open("images/UltimateDownloader Banner.png"),
+                                              size=(580, 130))
         self.logo = customtkinter.CTkLabel(self.top, image=self.dwImage, text="")
         self.logo.grid(row=0, column=0, columnspan=4, pady=(0, 5))
 
-        self.choices = customtkinter.CTkOptionMenu(self.top, height=30, width=130, values=["YT Video", "YT PlayList"], corner_radius=15, font=("cairo", 14, "bold"))
+        self.choices = customtkinter.CTkOptionMenu(self.top, height=30, width=130, values=["YT Video", "YT PlayList"],
+                                                   corner_radius=15, font=("cairo", 14, "bold"))
         self.choices.grid(row=1, column=0, padx=5)
         self.choices.set("YT Video")
 
-        self.url_entry = customtkinter.CTkEntry(self.top, height=30, placeholder_text="URL HERE", font=('Calbiri', 14, "bold"), width=300, corner_radius=15, fg_color="#0055AA")
+        self.url_entry = customtkinter.CTkEntry(self.top, height=30, placeholder_text="URL HERE",
+                                                font=('Calbiri', 14, "bold"), width=300, corner_radius=15,
+                                                fg_color="#0055AA")
         self.url_entry.grid(row=1, column=1, columnspan=2, padx=5)
         self.url_entry.bind("<Return>", self.geturlx)
         self.url_entry.focus_set()
@@ -356,10 +351,12 @@ class UltimateDownloader():
         self.url_entry.bind('<Return>', self.geturlx)
 
         self.fetch_image = customtkinter.CTkImage(light_image=Image.open("images/info.jpg"),
-                                         dark_image=Image.open("images/info.jpg"),
-                                         size=(25, 25))
+                                                  dark_image=Image.open("images/info.jpg"),
+                                                  size=(25, 25))
 
-        self.fetch_burron = customtkinter.CTkButton(self.top, image=self.fetch_image, text="", font=('Calbiri', 16, 'bold'), height=30, width=120, corner_radius=15, command=self.geturlx)
+        self.fetch_burron = customtkinter.CTkButton(self.top, image=self.fetch_image, text="",
+                                                    font=('Calbiri', 16, 'bold'), height=30, width=120,
+                                                    corner_radius=15, command=self.geturlx)
         self.fetch_burron.grid(row=1, column=3, padx=5)
 
         self.title_label = customtkinter.CTkLabel(self.top, text='Title: ', font=('Calbiri', 16, 'bold'))
@@ -371,7 +368,8 @@ class UltimateDownloader():
         self.file_size_label = customtkinter.CTkLabel(self.top, text='File size: ', font=('Calbiri', 16, 'bold'))
         self.file_size_label.grid(row=4, column=0, columnspan=4, padx=10, sticky="w")
 
-        self.available_label = customtkinter.CTkLabel(self.top, text='Available to download:', font=('Calbiri', 16, 'bold'))
+        self.available_label = customtkinter.CTkLabel(self.top, text='Available to download:',
+                                                      font=('Calbiri', 16, 'bold'))
         self.available_label.grid(row=5, column=0, columnspan=4, padx=10, pady=(10, 5), sticky="w")
 
         # self.file_download_label = customtkinter.CTkLabel(self.top, text='File / Others ', font=('Calbiri', 16, 'bold'))
@@ -384,28 +382,35 @@ class UltimateDownloader():
         self.video_download_label = customtkinter.CTkLabel(self.top, text='YT Video ', font=('Calbiri', 16, 'bold'))
         self.video_download_label.grid(row=7, column=0, padx=10, pady=(0, 10), sticky="w")
 
-        self.video_height_quality_download = customtkinter.CTkButton(self.top, text=f'HQ', font=('Calbiri', 16, 'bold'), width=120, height=30, corner_radius=15)
-        self.video_height_quality_download.grid(row=7, column=3, padx=5,  pady=(0, 10), sticky="e")
+        self.video_height_quality_download = customtkinter.CTkButton(self.top, text=f'HQ', font=('Calbiri', 16, 'bold'),
+                                                                     width=120, height=30, corner_radius=15)
+        self.video_height_quality_download.grid(row=7, column=3, padx=5, pady=(0, 10), sticky="e")
 
-        self.video_medium_quality_download = customtkinter.CTkButton(self.top, text=f'RQ', font=('Calbiri', 16, 'bold'), width=120, height=30, corner_radius=15)
-        self.video_medium_quality_download.grid(row=7, column=2, padx=(5, 20),  pady=(0, 10), sticky="e")
+        self.video_medium_quality_download = customtkinter.CTkButton(self.top, text=f'RQ', font=('Calbiri', 16, 'bold'),
+                                                                     width=120, height=30, corner_radius=15)
+        self.video_medium_quality_download.grid(row=7, column=2, padx=(5, 20), pady=(0, 10), sticky="e")
 
-        self.video_low_quality_download = customtkinter.CTkButton(self.top, text=f'MP3', font=('Calbiri', 16, 'bold'), width=120, height=30, corner_radius=15)
-        self.video_low_quality_download.grid(row=7, column=1,  pady=(0, 10), sticky="e")
+        self.video_low_quality_download = customtkinter.CTkButton(self.top, text=f'MP3', font=('Calbiri', 16, 'bold'),
+                                                                  width=120, height=30, corner_radius=15)
+        self.video_low_quality_download.grid(row=7, column=1, pady=(0, 10), sticky="e")
 
-        self.playlist_download_label = customtkinter.CTkLabel(self.top, text='YT PLayList ', font=('Calbiri', 16, 'bold'))
+        self.playlist_download_label = customtkinter.CTkLabel(self.top, text='YT PLayList ',
+                                                              font=('Calbiri', 16, 'bold'))
         self.playlist_download_label.grid(row=8, column=0, padx=10, pady=(0, 10), sticky="w")
 
-        self.playlist_height_quality_download = customtkinter.CTkButton(self.top, text=f'HQ', font=('Calbiri', 16, 'bold'),
-                                                                width=120, height=30, corner_radius=15)
+        self.playlist_height_quality_download = customtkinter.CTkButton(self.top, text=f'HQ',
+                                                                        font=('Calbiri', 16, 'bold'),
+                                                                        width=120, height=30, corner_radius=15)
         self.playlist_height_quality_download.grid(row=8, column=3, padx=5, pady=(0, 10), sticky="e")
 
-        self.playlist_medium_quality_download = customtkinter.CTkButton(self.top, text=f'RQ', font=('Calbiri', 16, 'bold'),
-                                                                width=120, height=30, corner_radius=15)
+        self.playlist_medium_quality_download = customtkinter.CTkButton(self.top, text=f'RQ',
+                                                                        font=('Calbiri', 16, 'bold'),
+                                                                        width=120, height=30, corner_radius=15)
         self.playlist_medium_quality_download.grid(row=8, column=2, padx=(5, 20), pady=(0, 10), sticky="e")
 
-        self.playlist_low_quality_download = customtkinter.CTkButton(self.top, text=f'MP3', font=('Calbiri', 16, 'bold'),
-                                                             width=120, height=30, corner_radius=15)
+        self.playlist_low_quality_download = customtkinter.CTkButton(self.top, text=f'MP3',
+                                                                     font=('Calbiri', 16, 'bold'),
+                                                                     width=120, height=30, corner_radius=15)
         self.playlist_low_quality_download.grid(row=8, column=1, pady=(0, 10), sticky="e")
 
         # self.audio_download_label = customtkinter.CTkLabel(self.top, text='Audio ', font=('Calbiri', 16, 'bold'))
@@ -428,7 +433,8 @@ class UltimateDownloader():
         self.download_path = customtkinter.CTkLabel(self.top, text='Downloaded in: ', font=('Calbiri', 16, 'bold'))
         self.download_path.grid(row=12, column=0, columnspan=3, padx=10, pady=10, sticky="w")
 
-        self.browse_button = customtkinter.CTkButton(self.top, text='Browse', font=('Calbiri', 16, 'bold'), width=120, corner_radius=15, command=self.browse)
+        self.browse_button = customtkinter.CTkButton(self.top, text='Browse', font=('Calbiri', 16, 'bold'), width=120,
+                                                     corner_radius=15, command=self.browse)
         self.browse_button.grid(row=12, column=3, padx=5, pady=10, sticky="e")
 
         tm = self.check_theme_mode()
@@ -439,12 +445,13 @@ class UltimateDownloader():
         customtkinter.set_appearance_mode(self.theme_mode)
 
         self.dark_mode_switch = customtkinter.CTkSwitch(master=self.top, text="Dark Mode", command=self.appearanceMode,
-                                                   variable=self.appearanceVar, onvalue="on", offvalue="off",
-                                                   font=("calbiri", 12, "bold"))
+                                                        variable=self.appearanceVar, onvalue="on", offvalue="off",
+                                                        font=("calbiri", 12, "bold"))
         self.dark_mode_switch.grid(row=13, column=0, columnspan=4, pady=10, padx=10)
 
         self.about_button = customtkinter.CTkButton(self.top, text='!',
-                            font=('Calbiri', 14, 'bold'), width=5, corner_radius=15, command=self.dev)
+                                                    font=('Calbiri', 14, 'bold'), width=5, corner_radius=15,
+                                                    command=self.dev)
         self.about_button.grid(row=13, column=3, padx=5, pady=10, sticky="e")
 
         self.top.protocol("WM_DELETE_WINDOW", self.stop)
@@ -452,6 +459,7 @@ class UltimateDownloader():
         self.my_menu.add_command(label='paste', command=self.paste)
         self.checkForUpdates()
         self.top.mainloop()
+
 
 if __name__ == "__main__":
     UD = UltimateDownloader()
